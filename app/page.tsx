@@ -114,44 +114,48 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- Live tunnel -------------------------- */}
-      <section className="relative border-y border-line/50">
+      {/* Fixed dark backdrop: the tunnel is a night scene in both themes,
+          and the overlay text must stay readable before the canvas loads. */}
+      <section className="relative border-y border-line/50 bg-[#0a0d11]">
         <LazyScene className="relative h-[70vh] min-h-[480px]">
           <div className="absolute inset-0">
             <TunnelScene />
           </div>
         </LazyScene>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-night/85 via-night/20 to-transparent" />
+        {/* The tunnel scene is always dark, so this overlay keeps fixed
+            light-on-dark colours in both themes. */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0a0d11]/90 via-[#0a0d11]/40 to-transparent" />
         <div className="pointer-events-none absolute inset-0">
           <div className="mx-auto flex h-full max-w-7xl items-center px-5 lg:px-8">
             <div className="max-w-md">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-signal">
-                <span className="live-dot h-1.5 w-1.5 rounded-full bg-alert" />
+              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#ffe718]">
+                <span className="live-dot h-1.5 w-1.5 rounded-full bg-[#ff3543]" />
                 Live network · 24/7
               </p>
-              <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-frost sm:text-4xl">
+              <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-[#eef1f4] sm:text-4xl">
                 Inside the network, around the clock
               </h2>
-              <p className="mt-4 leading-relaxed text-mist">
+              <p className="mt-4 leading-relaxed text-[#c3cad2]">
                 Tunnels, expressways and interchanges — monitored, ventilated, signed and kept
                 flowing by our control rooms and O&amp;M crews. We operate the ITS backbone of
                 Qatar&apos;s strategic highway network, every hour of every day.
               </p>
               <div className="mt-6 flex gap-8">
                 <div>
-                  <p className="font-display text-2xl font-semibold text-signal">
+                  <p className="font-display text-2xl font-semibold text-[#ffe718]">
                     <Counter value={11} />
                   </p>
-                  <p className="text-xs text-mist">weigh stations operated</p>
+                  <p className="text-xs text-[#c3cad2]">weigh stations operated</p>
                 </div>
                 <div>
-                  <p className="font-display text-2xl font-semibold text-signal">24/7</p>
-                  <p className="text-xs text-mist">control-room operations</p>
+                  <p className="font-display text-2xl font-semibold text-[#ffe718]">24/7</p>
+                  <p className="text-xs text-[#c3cad2]">control-room operations</p>
                 </div>
                 <div>
-                  <p className="font-display text-2xl font-semibold text-signal">
+                  <p className="font-display text-2xl font-semibold text-[#ffe718]">
                     <Counter value={99} suffix="%" />
                   </p>
-                  <p className="text-xs text-mist">asset availability targets</p>
+                  <p className="text-xs text-[#c3cad2]">asset availability targets</p>
                 </div>
               </div>
             </div>
