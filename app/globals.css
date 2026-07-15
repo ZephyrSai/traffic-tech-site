@@ -1,26 +1,206 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+ * Brand palette lifted from the original traffic-tech.com:
+ * charcoal #222931 · signal yellow #ffe718 · grays #5f656d/#aeb6be · red #ff3543
+ *
+ * Light theme lives in :root, dark overrides in .dark. A pre-hydration script
+ * in the root layout sets .dark from localStorage or prefers-color-scheme.
+ * ------------------------------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --tt-night: #f4f5f8;
+  --tt-abyss: #eceef2;
+  --tt-panel: #ffffff;
+  --tt-panel-2: #e7eaef;
+  --tt-line: #d7dce3;
+  --tt-mist: #5f656d;
+  --tt-frost: #171c22;
+  --tt-signal: #9a7d00;
+  --tt-signal-dim: #d3b200;
+  --tt-amberglow: #a85a08;
+  --tt-mint: #096e8c;
+  --tt-alert: #d81f2e;
+  color-scheme: light;
+}
+
+.dark {
+  --tt-night: #0c0f13;
+  --tt-abyss: #11151a;
+  --tt-panel: #1a2027;
+  --tt-panel-2: #222931;
+  --tt-line: #313a44;
+  --tt-mist: #aeb6be;
+  --tt-frost: #eef1f4;
+  --tt-signal: #ffe718;
+  --tt-signal-dim: #8a7d0c;
+  --tt-amberglow: #feb62a;
+  --tt-mint: #53d8ff;
+  --tt-alert: #ff3543;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-night: var(--tt-night);
+  --color-abyss: var(--tt-abyss);
+  --color-panel: var(--tt-panel);
+  --color-panel-2: var(--tt-panel-2);
+  --color-line: var(--tt-line);
+  --color-mist: var(--tt-mist);
+  --color-frost: var(--tt-frost);
+  --color-signal: var(--tt-signal);
+  --color-signal-dim: var(--tt-signal-dim);
+  --color-amberglow: var(--tt-amberglow);
+  --color-mint: var(--tt-mint);
+  --color-alert: var(--tt-alert);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-grotesk);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--tt-night);
+  color: var(--tt-frost);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: rgba(255, 231, 24, 0.4);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--tt-night);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--tt-line);
+  border-radius: 8px;
+}
+
+/* Brand button: signal yellow with dark text — identical in both themes,
+   exactly like the logo lockup. */
+.btn-brand {
+  background: #ffe718;
+  color: #171c22;
+  transition: filter 0.2s ease;
+}
+.btn-brand:hover {
+  filter: brightness(1.08);
+}
+
+/* Reveal-on-scroll initial state — anime.js animates to visible.
+   Reduced-motion users always see content. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #171c22 5%, #9a7d00 55%, #a85a08 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-gradient {
+  background: linear-gradient(100deg, #eef1f4 5%, #ffe718 60%, #feb62a 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.card-glow {
+  position: relative;
+}
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    160deg,
+    rgba(154, 125, 0, 0.55),
+    rgba(154, 125, 0, 0.1) 35%,
+    rgba(168, 90, 8, 0.35)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.dark .card-glow::before {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 231, 24, 0.5),
+    rgba(255, 231, 24, 0.07) 35%,
+    rgba(254, 182, 42, 0.28)
+  );
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(23, 28, 34, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 28, 34, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 75%);
+}
+.dark .grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 231, 24, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 231, 24, 0.035) 1px, transparent 1px);
+}
+
+/* Hazard-stripe accent (brand motif from the original brochures) */
+.hazard-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffe718 0 14px,
+    #14181d 14px 28px
+  );
+}
+
+/* Awards marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 55s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Live indicator */
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.live-dot {
+  animation: live-pulse 1.6s ease-in-out infinite;
 }
