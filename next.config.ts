@@ -7,6 +7,8 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const nextConfig: NextConfig = {
   output: "export",
   basePath,
+  // emit about/index.html instead of about.html so GitHub Pages serves clean URLs
+  trailingSlash: true,
   images: {
     // next/image optimization needs a server; Pages is static-only
     unoptimized: true,
