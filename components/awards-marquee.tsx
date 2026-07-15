@@ -68,13 +68,13 @@ export const awards: Award[] = [
 
 function AwardCard({ a }: { a: Award }) {
   return (
-    <figure className="w-[26rem] shrink-0 rounded-2xl border border-line/70 bg-panel p-5 transition hover:border-signal/40">
-      <div className="relative h-60 overflow-hidden rounded-xl bg-abyss">
+    <figure className="w-[19rem] shrink-0 rounded-2xl border border-line/70 bg-panel p-5 transition hover:border-signal/40 sm:w-[26rem]">
+      <div className="relative h-44 overflow-hidden rounded-xl bg-abyss sm:h-60">
         <Image
           src={a.img}
           alt={`${a.title} — ${a.issuer} (${a.year})`}
           fill
-          sizes="416px"
+          sizes="(min-width: 640px) 416px, 304px"
           className="object-cover"
         />
       </div>
@@ -91,8 +91,8 @@ function AwardCard({ a }: { a: Award }) {
 export function AwardsMarquee() {
   return (
     <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-night to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-night to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-night to-transparent sm:w-24" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-night to-transparent sm:w-24" />
       <div className="marquee-track flex w-max gap-6">
         {[...awards, ...awards].map((a, i) => (
           <AwardCard key={i} a={a} />

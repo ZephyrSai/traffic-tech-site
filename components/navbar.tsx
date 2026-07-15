@@ -34,7 +34,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
         <Logo />
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
           {nav.map((item) => {
             const active = pathname.startsWith(item.href);
             return (
@@ -62,7 +62,7 @@ export function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -83,7 +83,7 @@ export function Navbar() {
 
       {open && (
         <nav
-          className="border-t border-line/60 bg-night/95 px-5 py-4 backdrop-blur-xl md:hidden"
+          className="border-t border-line/60 bg-night/95 px-5 py-4 backdrop-blur-xl lg:hidden"
           aria-label="Mobile"
         >
           <div className="flex flex-col gap-1">
